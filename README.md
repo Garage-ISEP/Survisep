@@ -15,11 +15,11 @@ For pycharm it would be venv !
 
 Then perform the following commands to install all tge packages
 
-    pip install requirements.txt
+    pip install -r requirements.txt
 
 or if it does not work
     
-    py -m pip install requirements.txt
+    py -m pip install -r requirements.txt
 
 finally launch the project from the main.py file.
 
