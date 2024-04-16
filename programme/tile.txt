@@ -1,0 +1,100 @@
+0 = snow
+
+1 = rock
+
+2 = dirt
+2.1= dirt_rock_top
+2.2= dirt_rock_top_left
+2.3= dirt_rock_top_right
+2.4= dirt_rock_right
+2.5= dirt_rock_down_right
+2.6= dirt_rock_down
+2.7= dirt_rock_down_left
+2.8= dirt_rock_left
+2.91= dirt_rock_corner_top_right
+2.92= dirt_rock_corner_top_left
+2.93= dirt_rock_corner_down_right
+2.94= dirt_rock_corner_down_left
+
+
+
+
+3 = grass
+3.01 = grass tree top right
+3.02 = grass tree top left
+3.03 = grass tree down right
+3.04 = grass tree down left
+3.05 = grass mushroom1
+3.06 = grass mushroom2
+3.07 = grass bush
+3.08 = grass rock
+3.1= grass_dirt_top
+3.2= grass_dirt_top_left
+3.3= grass_dirt_top_right
+3.4= grass_dirt_right
+3.5= grass_dirt_down_right
+3.6= grass_dirt_down
+3.7= grass_dirt_down_left
+3.8= grass_dirt_left
+3.91=grass_dirt_corner_top_right
+3.92=grass_dirt_corner_top_left
+3.93=grass_dirt_corner_down_right
+3.94=grass_dirt_corner_down_left
+
+
+
+
+
+
+4 = sand
+4.01 = sand palm top right
+4.02 = sand palm top left
+4.03 = sand palm down right
+4.04 = sand palm down left
+4.1= sand_clearwater_top
+4.2= sand_clearwater_top_left
+4.3= sand_clearwater_top_right
+4.4= sand_clearwater_right
+4.5= sand_clearwater_down_right
+4.6= sand_clearwater_down
+4.7= sand_clearwater_down_left
+4.8= sand_clearwater_left
+4.91=sand_clearwater_corner_top_right
+4.92=sand_clearwater_corner_top_left
+4.93=sand_clearwater_corner_down_right
+4.94=sand_clearwater_corner_down_left
+
+
+5 = clear water
+
+
+6 = water
+6.1= water_water_top
+6.2= water_water_top_left
+6.3= water_water_top_right
+6.4= water_water_right
+6.5= water_water_down_right
+6.6= water_water_down
+6.7= water_water_down_left
+6.8= water_water_left
+6.91=water_water_corner_top_right
+6.92=water_water_corner_top_left
+6.93=water_water_corner_down_right
+6.94=water_water_corner_down_left
+
+
+10.1 = atlas top right
+10.2 = atlas top left
+10.3 = atlas down right
+10.4 = atlas down left
+
+
+11.1 = atlas top
+11.2 = atlas top right
+11.3 = atlas right
+11.4 = atlas down right
+11.5 = atlas down
+11.6 = atlas down left
+11.7 = atlas left
+11.8 = atlas top left
+11.9 = atlas center

@@ -1,0 +1,25 @@
+{
+  "sprite": "female01",
+  "name": "Daniel",
+  "level": 12,
+  "hp_max": 100,
+  "hp": 100,
+  "inventory": {
+    "1": {
+      "type": "sword",
+      "name": "cave copper sword"
+    },
+    "2": {
+      "type": "sword",
+      "name": "great poison sword"
+    },
+    "3": {
+      "type": "sword",
+      "name": "reinforced copper sword"
+    },
+    "4": {
+      "type": "sword",
+      "name": "cave magic sword"
+    }
+  }
+}
