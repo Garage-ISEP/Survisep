@@ -1,5 +1,5 @@
 import pygame as py
-import os
+import os, sys
 import random as r
 import json
 clock=py.time.Clock()

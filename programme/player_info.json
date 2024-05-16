@@ -7,19 +7,19 @@
   "inventory": {
     "1": {
       "type": "sword",
-      "name": "cave copper sword"
+      "name": "large diamond sword"
     },
     "2": {
       "type": "sword",
-      "name": "great poison sword"
+      "name": "omega sword"
     },
     "3": {
-      "type": "sword",
-      "name": "reinforced copper sword"
+      "type": "knife",
+      "name": "diamond knife"
     },
     "4": {
       "type": "sword",
-      "name": "cave magic sword"
+      "name": "great copper sword"
     }
   }
 }
