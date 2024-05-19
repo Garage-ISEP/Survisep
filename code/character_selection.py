@@ -1,21 +1,16 @@
-import pygame as py
-import os, sys
+import os, sys, json
 import random as r
-import json
-clock=py.time.Clock()
-py.font.init()
+from settings import *
 
-py.display.init()
 
-screen = py.display.set_mode((500, 500), py.RESIZABLE)
-grass = py.image.load("../assets/image/map/grass/grass.png")
-dirt = py.image.load("../assets/image/map/dirt/dirt.png")
-grass_dirt_left = py.image.load("../assets/image/map/grass/grass_dirt_left.png")
-grass_dirt_right = py.image.load("../assets/image/map/grass/grass_dirt_right.png")
+SCREEN = py.display.set_mode((800, 600))
+CLOCK = py.time.Clock()
 
-sign_left = py.image.load("../assets/image/character_selection/sign_left.png")
-sign_right = py.image.load("../assets/image/character_selection/sign_right.png")
-start_button = py.image.load("../assets/image/character_selection/start_button.png")
+grass = py.image.load(path_to("assets/img/tiles/grass/grass.png"))
+dirt = py.image.load(path_to("assets/img/tiles/dirt/dirt.png"))
+
+grass_dirt_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_left.png"))
+grass_dirt_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_right.png"))
 
 def draw_background(background_frame,ended):
     width, height = py.display.get_surface().get_size()
@@ -28,14 +23,14 @@ def draw_background(background_frame,ended):
 
     offset=tile_size[0]/2
     for y in range(int(height/tile_size[1])+2):
-        screen.blit(grass_dirt_right_rs, (width / 2 - offset-tile_size[0], y * tile_size[1]-background_frame))
-        screen.blit(dirt_rs,(width/2-offset,y*tile_size[1]-background_frame))
-        screen.blit(grass_dirt_left_rs,(width/2+offset,y*tile_size[1]-background_frame))
+        SCREEN.blit(grass_dirt_right_rs, (width / 2 - offset-tile_size[0], y * tile_size[1]-background_frame))
+        SCREEN.blit(dirt_rs,(width/2-offset,y*tile_size[1]-background_frame))
+        SCREEN.blit(grass_dirt_left_rs,(width/2+offset,y*tile_size[1]-background_frame))
 
         for x in range(0,-int((width/2)/tile_size[0]) ,-1):
-            screen.blit(grass_rs, ((width/2 - offset - tile_size[0]*2) + tile_size[0]*x,y*tile_size[1]-background_frame))
+            SCREEN.blit(grass_rs, ((width/2 - offset - tile_size[0]*2) + tile_size[0]*x,y*tile_size[1]-background_frame))
         for x in range(int((width+tile_size[0])/tile_size[0]),int((width/2)/tile_size[0]),-1):
-            screen.blit(grass_rs, (x*tile_size[0]+offset,y*tile_size[1]-background_frame))
+            SCREEN.blit(grass_rs, (x*tile_size[0]+offset,y*tile_size[1]-background_frame))
 
     if (not ended):
         if (background_frame>=tile_size[0]):
@@ -46,20 +41,15 @@ def draw_background(background_frame,ended):
 
 
 def select_player_sprite():
-    grass = py.image.load("../assets/image/map/grass/grass.png")
-    dirt = py.image.load("../assets/image/map/dirt/dirt.png")
-    grass_dirt_left = py.image.load("../assets/image/map/grass/grass_dirt_left.png")
-    grass_dirt_right = py.image.load("../assets/image/map/grass/grass_dirt_right.png")
-
-    sign_left = py.image.load("../assets/image/character_selection/sign_left.png")
-    sign_right = py.image.load("../assets/image/character_selection/sign_right.png")
-    start_button = py.image.load("../assets/image/character_selection/start_button.png")
+    sign_left = py.image.load(path_to("assets/img/GUI/sign_left.png"))
+    sign_right = py.image.load(path_to("assets/img/GUI/sign_right.png"))
+    start_button = py.image.load(path_to("assets/img/GUI/start_button.png"))
 
     py.display.set_caption("Character selection")
 
 
-    file_source = "../assets/image/player"
-    all_sprite = os.listdir("../assets/image/player")
+    file_source = path_to("assets/img/characters")
+    all_sprite = os.listdir(path_to("assets/img/characters"))
     animation = 1
     animation_frame = 0
     choice = 0
@@ -75,7 +65,7 @@ def select_player_sprite():
         background_frame = draw_background(background_frame,False)
 
         width, height = py.display.get_surface().get_size()
-        clock.tick(60)
+        CLOCK.tick(60)
 
         for event in py.event.get():
             if event.type == py.QUIT:
@@ -104,12 +94,12 @@ def select_player_sprite():
                 elif start_button_pos[0] <= mouse_pos[0] <= start_button_pos[0] + start_button.get_width() and \
                         start_button_pos[1] <= mouse_pos[1] <= start_button_pos[1] + start_button.get_height():
                     data = None
-                    with open("player_info.json", 'r') as _file:
+                    with open("assets/data/player_info.json", 'r') as _file:
                         data = json.load(_file)
                         _file.close()
                     data["sprite"] = all_sprite[choice]
 
-                    with open("player_info.json", 'w') as _file:
+                    with open("assets/data/player_info.json", 'w') as _file:
                         json.dump(data, _file, indent=2)
                         _file.close()
 
@@ -140,21 +130,21 @@ def select_player_sprite():
         start_button = py.transform.scale(start_button, (width / 4, height / 9))
         start_button_pos = (1.5 * (width / 4), (height / 10) * 8)
 
-        screen.blit(sign_left, (sign_left_pos))
-        screen.blit(sign_right, (sign_right_pos))
-        screen.blit(start_button, (start_button_pos))
+        SCREEN.blit(sign_left, (sign_left_pos))
+        SCREEN.blit(sign_right, (sign_right_pos))
+        SCREEN.blit(start_button, (start_button_pos))
 
         # draw player
         player_sprite = py.image.load(file_source + "/" + all_sprite[choice] + "/down_" + str(animation) + ".png")
         player_sprite = py.transform.scale(player_sprite, (height / 7, height / 7))
         player_pos = (width / 2 - player_sprite.get_width() / 2, height - height / 4 - player_sprite.get_height())
-        screen.blit(player_sprite, player_pos)
+        SCREEN.blit(player_sprite, player_pos)
         # draw player name
         font_name = py.font.SysFont('Eight Bit Dragon', int(height / 20))
         sprite_name = font_name.render(all_sprite[choice], True, (0, 0, 0))
         name_pos = player_pos = (
         width / 2 - sprite_name.get_width() / 2, height - height / 4 - player_sprite.get_height() * 1.5)
-        screen.blit(sprite_name, name_pos)
+        SCREEN.blit(sprite_name, name_pos)
 
         # update animation
         animation_frame += 1
@@ -178,8 +168,8 @@ def select_player_sprite():
 
 def finished_animation(background_frame,choice):
     width, height = py.display.get_surface().get_size()
-    file_source =  "../assets/image/player"
-    all_sprite = os.listdir("../assets/image/player")
+    file_source =  "assets/img/characters"
+    all_sprite = os.listdir("assets/img/characters")
     side = ["down","left","up","right"]
     animation_side = 0
     lenght = 60*1
@@ -191,14 +181,14 @@ def finished_animation(background_frame,choice):
 
 
     for i in range(1,lenght):
-        clock.tick(60)
+        CLOCK.tick(60)
         draw_background(background_frame,True)
         # draw player
         player_sprite = py.image.load(file_source + "/" + all_sprite[choice] + "/"+ side[animation_side]  +"_"   + "1.png")
         player_sprite = py.transform.scale(player_sprite, (height / 7, height / 7))
         player_sprite.set_alpha(255 - (255/lenght)*i*1.2)
         player_pos = (width / 2 - player_sprite.get_width() / 2, height - height / 4 - player_sprite.get_height() - elevation_speed*i)
-        screen.blit(player_sprite, player_pos)
+        SCREEN.blit(player_sprite, player_pos)
         py.display.update()
         if (frame == frame_to_rotate):
             frame=0
@@ -210,13 +200,13 @@ def finished_animation(background_frame,choice):
             frame+=1
 
 def add_weapon():
-    all_hammer = os.listdir("../assets/image/weapon/hammer")
+    all_hammer = os.listdir("assets/img/weapon/hammer")
     all_hammer = [hammer.replace(".png","") for hammer in all_hammer]
 
-    all_knife = os.listdir("../assets/image/weapon/knife")
+    all_knife = os.listdir("assets/img/weapon/knife")
     all_knife = [knife.replace(".png", "") for knife in all_knife]
 
-    all_sword = os.listdir("../assets/image/weapon/sword")
+    all_sword = os.listdir("assets/img/weapon/sword")
     all_sword = [sword.replace(".png", "") for sword in all_sword]
     all_weapon = []
     for hammer in all_hammer:
@@ -227,7 +217,7 @@ def add_weapon():
         all_weapon.append(["sword",sword])
 
     data = None
-    with open("player_info.json", 'r') as _file:
+    with open("assets/data/player_info.json", 'r') as _file:
         data = json.load(_file)
         _file.close()
 
@@ -237,6 +227,6 @@ def add_weapon():
         data["inventory"][str(i)]["name"] = weapon[1]
 
 
-    with open("player_info.json", 'w') as _file:
+    with open("assets/data/player_info.json", 'w') as _file:
         json.dump(data, _file, indent=2)
         _file.close()

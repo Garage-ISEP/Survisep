@@ -2,10 +2,10 @@ from PIL import Image
 import os
 
 def separate_32x32_player(filename,name):
-    isExist = os.path.exists("../assets/image/player/"+name)
+    isExist = os.path.exists("../assets/image/characters/"+name)
     if not isExist:
-        os.makedirs("../assets/image/player/"+name)
-    to_save="../assets/image/player/"+name+"/"
+        os.makedirs("../assets/image/characters/"+name)
+    to_save="../assets/image/characters/"+name+"/"
     extension = ".png"
     filename = "../"+filename
     img = Image.open(filename)

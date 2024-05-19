@@ -1,29 +1,31 @@
-import pygame as py
-py.font.init()
-
-import json
+from settings import *
 import random as r
-import os
 
 fps = 30
 
+###########################################################
+#
+#                      Player Sprite Funcs
+#
+###########################################################
+
 def load_player_sprite():
     sprite = []
-    jsonFile = open("player_info.json", "r+")
+    jsonFile = open("assets/data/player_info.json", "r+")
     data = json.load(jsonFile)
     sprite_name = data["sprite"]
-    player_down_1 = py.image.load("../assets/image/player/"+sprite_name+"/down_1"+".png")
-    player_down_2 = py.image.load("../assets/image/player/" + sprite_name + "/down_2"+".png")
-    player_down_3 = py.image.load("../assets/image/player/" + sprite_name + "/down_3"+".png")
-    player_left_1 = py.image.load("../assets/image/player/"+sprite_name+"/left_1"+".png")
-    player_left_2 = py.image.load("../assets/image/player/" + sprite_name + "/left_2"+".png")
-    player_left_3 = py.image.load("../assets/image/player/" + sprite_name + "/left_3"+".png")
-    player_right_1 = py.image.load("../assets/image/player/"+sprite_name+"/right_1"+".png")
-    player_right_2 = py.image.load("../assets/image/player/" + sprite_name + "/right_2"+".png")
-    player_right_3 = py.image.load("../assets/image/player/" + sprite_name + "/right_3"+".png")
-    player_up_1 = py.image.load("../assets/image/player/"+sprite_name+"/up_1"+".png")
-    player_up_2 = py.image.load("../assets/image/player/" + sprite_name + "/up_2"+".png")
-    player_up_3 = py.image.load("../assets/image/player/" + sprite_name + "/up_3"+".png")
+    player_down_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/down_1"+".png"))
+    player_down_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/down_2"+".png"))
+    player_down_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/down_3"+".png"))
+    player_left_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/left_1"+".png"))
+    player_left_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/left_2"+".png"))
+    player_left_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/left_3"+".png"))
+    player_right_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/right_1"+".png"))
+    player_right_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/right_2"+".png"))
+    player_right_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/right_3"+".png"))
+    player_up_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/up_1"+".png"))
+    player_up_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/up_2"+".png"))
+    player_up_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/up_3"+".png"))
     down = [player_down_1,player_down_2,player_down_3]
     left = [player_left_1, player_left_2, player_left_3]
     right = [player_right_1, player_right_2, player_right_3]
@@ -39,26 +41,26 @@ def load_player_sprite():
 def load_inventory_sprite():
     sprite = []
     data = None
-    with open("player_info.json", 'r') as _file:
+    with open("assets/data/player_info.json", 'r') as _file:
         data = json.load(_file)
         _file.close()
     inventory = data["inventory"]
     for i in range(len(inventory)):
-        sprite.append(py.image.load("../assets/image/weapon/"+inventory[str(i+1)]["type"]+"/"+inventory[str(i+1)]["name"]+".png"))
+        sprite.append(py.image.load(path_to("assets/img/weapon/"+inventory[str(i+1)]["type"]+"/"+inventory[str(i+1)]["name"]+".png")))
 
     return sprite
 
 def load_inventory_tile():
     sprite = []
-    sprite.append(py.image.load("../assets/image/GUI/inventory_tile_selected.png"))
-    sprite.append(py.image.load("../assets/image/GUI/inventory_tile.png"))
-    sprite.append(py.image.load("../assets/image/GUI/item_name_box.png"))
+    sprite.append(py.image.load(path_to("assets/img/GUI/inventory_tile_selected.png")))
+    sprite.append(py.image.load(path_to("assets/img/GUI/inventory_tile.png")))
+    sprite.append(py.image.load(path_to("assets/img/GUI/item_name_box.png")))
 
     return sprite
 
 def load_inventory():
     data = None
-    with open("player_info.json", 'r') as _file:
+    with open("assets/data/player_info.json", 'r') as _file:
         data = json.load(_file)
         _file.close()
     inventory = data["inventory"]
@@ -76,6 +78,13 @@ def create_resized_sprite(sprite):
         else:
             sprite_rs.append(sprite[i])
     return sprite_rs
+
+
+###########################################################
+#
+#                      Player Class
+#
+###########################################################
 
 class Player_class:
     pos = [0,0]
@@ -174,7 +183,7 @@ class Player_class:
         py.draw.rect(screen,(0,255,0),(int(bar_pos[0]),int(health_bar_pos[1]),bar_lenght,bar_width))
 
 
-
+    # Draw Inventory TOP LEFT of Screen
 
     def draw_inventory(self,screen,width, height,tile_size):
         font_name = py.font.SysFont('Eight Bit Dragon', 200)
@@ -317,13 +326,13 @@ class Player_class:
         return tableau
 
     def add_weapon(self):
-        all_hammer = os.listdir("../assets/image/weapon/hammer")
+        all_hammer = os.listdir("assets/img/weapon/hammer")
         all_hammer = [hammer.replace(".png","") for hammer in all_hammer]
 
-        all_knife = os.listdir("../assets/image/weapon/knife")
+        all_knife = os.listdir("assets/img/weapon/knife")
         all_knife = [knife.replace(".png", "") for knife in all_knife]
 
-        all_sword = os.listdir("../assets/image/weapon/sword")
+        all_sword = os.listdir("assets/img/weapon/sword")
         all_sword = [sword.replace(".png", "") for sword in all_sword]
         all_weapon = []
         for hammer in all_hammer:
@@ -334,7 +343,7 @@ class Player_class:
             all_weapon.append(["sword",sword])
 
         data = None
-        with open("player_info.json", 'r') as _file:
+        with open("assets/data/player_info.json", 'r') as _file:
             data = json.load(_file)
             _file.close()
 
@@ -344,7 +353,7 @@ class Player_class:
             data["inventory"][str(i)]["name"] = weapon[1]
 
 
-        with open("player_info.json", 'w') as _file:
+        with open("assets/data/player_info.json", 'w') as _file:
             json.dump(data, _file, indent=2)
             _file.close()
 
@@ -353,7 +362,7 @@ class Player_class:
 
     def actualize(self):
         data = None
-        with open("player_info.json", 'r') as _file:
+        with open("assets/data/player_info.json", 'r') as _file:
             data = json.load(_file)
             _file.close()
         self.name = data["name"]

@@ -1,0 +1,25 @@
+{
+  "sprite": "female01",
+  "name": "Avabo",
+  "level": 999,
+  "hp_max": 100,
+  "hp": 100,
+  "inventory": {
+    "1": {
+      "type": "sword",
+      "name": "large blood sword"
+    },
+    "2": {
+      "type": "hammer",
+      "name": "wooden hammer"
+    },
+    "3": {
+      "type": "sword",
+      "name": "reinforced topaz sword"
+    },
+    "4": {
+      "type": "hammer",
+      "name": "silver smacker"
+    }
+  }
+}

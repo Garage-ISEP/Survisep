@@ -5,12 +5,12 @@ import pygame as py
 
 
 
-
+SEED = r.randint(1,100000)
 
 
 def create_map_image():
         height,width = 2000,2000
-        noise = PerlinNoise(octaves=25, seed=r.randint(1,100000))
+        noise = PerlinNoise(octaves=25, seed=SEED)
         xpix, ypix = height,width
         pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
 
@@ -46,7 +46,7 @@ def create_map_image():
 
 def creat_map_text(size):
     height, width = size,size
-    noise = PerlinNoise(octaves=23, seed=r.randint(1, 100000))
+    noise = PerlinNoise(octaves=23, seed=SEED)
     xpix, ypix = height, width
     pic = [[noise([i / xpix, j / ypix]) for j in range(xpix)] for i in range(ypix)]
 
@@ -70,7 +70,7 @@ def creat_map_text(size):
             else:
                 pic[x][y] = "6" #deep water
 
-    with open('map.txt', 'w') as f:
+    with open('../assets/data/map.txt', 'w') as f:
         for x in range(len(pic)):
             f.write(",".join(pic[x]))
             f.write("\n")
@@ -80,7 +80,7 @@ def creat_map_text(size):
 def add_map_effect(filename):
 
     #get map in tablea
-    with open('map.txt', 'r') as f:
+    with open('../assets/data/map.txt', 'r') as f:
         # Lecture de chaque ligne et stockage dans une liste
         lignes = f.readlines()
 
@@ -93,16 +93,10 @@ def add_map_effect(filename):
             tableau.append(element)
 
     #add transition
-    left = False
-    right = False
-    top = False
-    down = False
     for x in range(1,len(tableau)-1):
         for y in range(1,len(tableau[x])-1):
-            left = False
-            right = False
-            top = False
-            down = False
+            left = right = top = down = False
+            
             #sand to water
             if tableau[x][y]=="4":
                 if tableau[x][y-1]=="5":
@@ -400,7 +394,7 @@ def add_map_effect(filename):
 
     print("done4")
     #rewrite map
-    with open('map.txt', 'w') as f:
+    with open('../assets/data/map.txt', 'w') as f:
         for x in range(len(tableau)):
             f.write(",".join(tableau[x]))
             f.write("\n")
