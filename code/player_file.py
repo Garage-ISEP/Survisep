@@ -14,18 +14,18 @@ def load_player_sprite():
     jsonFile = open("assets/data/player_info.json", "r+")
     data = json.load(jsonFile)
     sprite_name = data["sprite"]
-    player_down_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/down_1"+".png"))
-    player_down_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/down_2"+".png"))
-    player_down_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/down_3"+".png"))
-    player_left_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/left_1"+".png"))
-    player_left_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/left_2"+".png"))
-    player_left_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/left_3"+".png"))
-    player_right_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/right_1"+".png"))
-    player_right_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/right_2"+".png"))
-    player_right_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/right_3"+".png"))
-    player_up_1 = py.image.load(path_to("assets/img/characters/"+sprite_name+"/up_1"+".png"))
-    player_up_2 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/up_2"+".png"))
-    player_up_3 = py.image.load(path_to("assets/img/characters/" + sprite_name + "/up_3"+".png"))
+    player_down_1 = py.image.load("assets/img/characters/"+sprite_name+"/down_1"+".png")
+    player_down_2 = py.image.load("assets/img/characters/" + sprite_name + "/down_2"+".png")
+    player_down_3 = py.image.load("assets/img/characters/" + sprite_name + "/down_3"+".png")
+    player_left_1 = py.image.load("assets/img/characters/"+sprite_name+"/left_1"+".png")
+    player_left_2 = py.image.load("assets/img/characters/" + sprite_name + "/left_2"+".png")
+    player_left_3 = py.image.load("assets/img/characters/" + sprite_name + "/left_3"+".png")
+    player_right_1 = py.image.load("assets/img/characters/"+sprite_name+"/right_1"+".png")
+    player_right_2 = py.image.load("assets/img/characters/" + sprite_name + "/right_2"+".png")
+    player_right_3 = py.image.load("assets/img/characters/" + sprite_name + "/right_3"+".png")
+    player_up_1 = py.image.load("assets/img/characters/"+sprite_name+"/up_1"+".png")
+    player_up_2 = py.image.load("assets/img/characters/" + sprite_name + "/up_2"+".png")
+    player_up_3 = py.image.load("assets/img/characters/" + sprite_name + "/up_3"+".png")
     down = [player_down_1,player_down_2,player_down_3]
     left = [player_left_1, player_left_2, player_left_3]
     right = [player_right_1, player_right_2, player_right_3]
@@ -46,15 +46,15 @@ def load_inventory_sprite():
         _file.close()
     inventory = data["inventory"]
     for i in range(len(inventory)):
-        sprite.append(py.image.load(path_to("assets/img/weapon/"+inventory[str(i+1)]["type"]+"/"+inventory[str(i+1)]["name"]+".png")))
+        sprite.append(py.image.load("assets/img/weapon/"+inventory[str(i+1)]["type"]+"/"+inventory[str(i+1)]["name"]+".png"))
 
     return sprite
 
 def load_inventory_tile():
     sprite = []
-    sprite.append(py.image.load(path_to("assets/img/GUI/inventory_tile_selected.png")))
-    sprite.append(py.image.load(path_to("assets/img/GUI/inventory_tile.png")))
-    sprite.append(py.image.load(path_to("assets/img/GUI/item_name_box.png")))
+    sprite.append(py.image.load("assets/img/GUI/inventory_tile_selected.png"))
+    sprite.append(py.image.load("assets/img/GUI/inventory_tile.png"))
+    sprite.append(py.image.load("assets/img/GUI/item_name_box.png"))
 
     return sprite
 

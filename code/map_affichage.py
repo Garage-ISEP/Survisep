@@ -6,7 +6,7 @@ from settings import *
 
 clock=py.time.Clock()
 
-SCREEN = py.display.set_mode((800, 600))
+SCREEN = py.display.set_mode((800, 600), py.HWSURFACE| py.DOUBLEBUF)
 
 fps = 30
 
@@ -19,121 +19,120 @@ tile_size[0] = int(width / columns) + 1
 tile_size[1] = int(height / rows) + 1
 
 
+water = py.image.load("assets/img/tiles/water/water.png")
+water_water_top = py.image.load("assets/img/tiles/water/water_water_top.png")
+water_water_top_right = py.image.load("assets/img/tiles/water/water_water_top_right.png")
+water_water_top_left = py.image.load("assets/img/tiles/water/water_water_top_left.png")
+water_water_left = py.image.load("assets/img/tiles/water/water_water_left.png")
+water_water_right = py.image.load("assets/img/tiles/water/water_water_right.png")
+water_water_down = py.image.load("assets/img/tiles/water/water_water_down.png")
+water_water_down_left = py.image.load("assets/img/tiles/water/water_water_down_left.png")
+water_water_down_right = py.image.load("assets/img/tiles/water/water_water_down_right.png")
+water_water_corner_down_right = py.image.load("assets/img/tiles/water/water_water_corner_down_right.png")
+water_water_corner_down_left = py.image.load("assets/img/tiles/water/water_water_corner_down_left.png")
+water_water_corner_top_right = py.image.load("assets/img/tiles/water/water_water_corner_top_right.png")
+water_water_corner_top_left = py.image.load("assets/img/tiles/water/water_water_corner_top_left.png")
 
-water = py.image.load(path_to("assets/img/tiles/water/water.png"))
-water_water_top = py.image.load(path_to("assets/img/tiles/water/water_water_top.png"))
-water_water_top_right = py.image.load(path_to("assets/img/tiles/water/water_water_top_right.png"))
-water_water_top_left = py.image.load(path_to("assets/img/tiles/water/water_water_top_left.png"))
-water_water_left = py.image.load(path_to("assets/img/tiles/water/water_water_left.png"))
-water_water_right = py.image.load(path_to("assets/img/tiles/water/water_water_right.png"))
-water_water_down = py.image.load(path_to("assets/img/tiles/water/water_water_down.png"))
-water_water_down_left = py.image.load(path_to("assets/img/tiles/water/water_water_down_left.png"))
-water_water_down_right = py.image.load(path_to("assets/img/tiles/water/water_water_down_right.png"))
-water_water_corner_down_right = py.image.load(path_to("assets/img/tiles/water/water_water_corner_down_right.png"))
-water_water_corner_down_left = py.image.load(path_to("assets/img/tiles/water/water_water_corner_down_left.png"))
-water_water_corner_top_right = py.image.load(path_to("assets/img/tiles/water/water_water_corner_top_right.png"))
-water_water_corner_top_left = py.image.load(path_to("assets/img/tiles/water/water_water_corner_top_left.png"))
-
-clear_water = py.image.load(path_to("assets/img/tiles/clear_water/clear_water.png"))
+clear_water = py.image.load("assets/img/tiles/clear_water/clear_water.png")
 
 
-grass = py.image.load(path_to("assets/img/tiles/grass/grass.png"))
-grass_dirt_top = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_top.png"))
-grass_dirt_top_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_top_right.png"))
-grass_dirt_top_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_top_left.png"))
-grass_dirt_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_left.png"))
-grass_dirt_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_right.png"))
-grass_dirt_down = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_down.png"))
-grass_dirt_down_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_down_left.png"))
-grass_dirt_down_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_down_right.png"))
-grass_dirt_corner_down_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_corner_down_right.png"))
-grass_dirt_corner_down_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_corner_down_left.png"))
-grass_dirt_corner_top_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_corner_top_right.png"))
-grass_dirt_corner_top_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_corner_top_left.png"))
-grass_tree_top_right = py.image.load(path_to("assets/img/tiles/grass/grass_tree_top_right.png"))
-grass_tree_top_left = py.image.load(path_to("assets/img/tiles/grass/grass_tree_top_left.png"))
-grass_tree_down_right = py.image.load(path_to("assets/img/tiles/grass/grass_tree_down_right.png"))
-grass_tree_down_left = py.image.load(path_to("assets/img/tiles/grass/grass_tree_down_left.png"))
-grass_mushroom1 = py.image.load(path_to("assets/img/tiles/grass/grass_mushroom1.png"))
-grass_mushroom2 = py.image.load(path_to("assets/img/tiles/grass/grass_mushroom2.png"))
-grass_bush = py.image.load(path_to("assets/img/tiles/grass/grass_bush.png"))
-grass_rock = py.image.load(path_to("assets/img/tiles/grass/grass_rock.png"))
-
+grass = py.image.load("assets/img/tiles/grass/grass.png")
+grass_dirt_top = py.image.load("assets/img/tiles/grass/grass_dirt_top.png")
+grass_dirt_top_right = py.image.load("assets/img/tiles/grass/grass_dirt_top_right.png")
+grass_dirt_top_left = py.image.load("assets/img/tiles/grass/grass_dirt_top_left.png")
+grass_dirt_left = py.image.load("assets/img/tiles/grass/grass_dirt_left.png")
+grass_dirt_right = py.image.load("assets/img/tiles/grass/grass_dirt_right.png")
+grass_dirt_down = py.image.load("assets/img/tiles/grass/grass_dirt_down.png")
+grass_dirt_down_left = py.image.load("assets/img/tiles/grass/grass_dirt_down_left.png")
+grass_dirt_down_right = py.image.load("assets/img/tiles/grass/grass_dirt_down_right.png")
+grass_dirt_corner_down_right = py.image.load("assets/img/tiles/grass/grass_dirt_corner_down_right.png")
+grass_dirt_corner_down_left = py.image.load("assets/img/tiles/grass/grass_dirt_corner_down_left.png")
+grass_dirt_corner_top_right = py.image.load("assets/img/tiles/grass/grass_dirt_corner_top_right.png")
+grass_dirt_corner_top_left = py.image.load("assets/img/tiles/grass/grass_dirt_corner_top_left.png")
+grass_tree_top_right = py.image.load("assets/img/tiles/grass/grass_tree_top_right.png")
+grass_tree_top_left = py.image.load("assets/img/tiles/grass/grass_tree_top_left.png")
+grass_tree_down_right = py.image.load("assets/img/tiles/grass/grass_tree_down_right.png")
+grass_tree_down_left = py.image.load("assets/img/tiles/grass/grass_tree_down_left.png")
+grass_mushroom1 = py.image.load("assets/img/tiles/grass/grass_mushroom1.png")
+grass_mushroom2 = py.image.load("assets/img/tiles/grass/grass_mushroom2.png")
+grass_bush = py.image.load("assets/img/tiles/grass/grass_bush.png")
+grass_rock = py.image.load("assets/img/tiles/grass/grass_rock.png")
 
 
 
 
 
 
-sand = py.image.load(path_to("assets/img/tiles/sand/sand.png"))
-sand_clearwater_top = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_top.png"))
-sand_clearwater_top_right = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_top_right.png"))
-sand_clearwater_top_left = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_top_left.png"))
-sand_clearwater_left = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_left.png"))
-sand_clearwater_right = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_right.png"))
-sand_clearwater_down = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_down.png"))
-sand_clearwater_down_left = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_down_left.png"))
-sand_clearwater_down_right = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_down_right.png"))
-sand_clearwater_corner_down_right = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_corner_down_right.png"))
-sand_clearwater_corner_down_left = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_corner_down_left.png"))
-sand_clearwater_corner_top_right = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_corner_top_right.png"))
-sand_clearwater_corner_top_left = py.image.load(path_to("assets/img/tiles/sand/sand_clearwater_corner_top_left.png"))
-sand_palm_top_right = py.image.load(path_to("assets/img/tiles/sand/sand_palm_top_right.png"))
-sand_palm_top_left = py.image.load(path_to("assets/img/tiles/sand/sand_palm_top_left.png"))
-sand_palm_down_right = py.image.load(path_to("assets/img/tiles/sand/sand_palm_down_right.png"))
-sand_palm_down_left = py.image.load(path_to("assets/img/tiles/sand/sand_palm_down_left.png"))
 
-clear_sand = py.image.load(path_to("assets/img/tiles/clear_sand/clear_sand.png"))
+sand = py.image.load("assets/img/tiles/sand/sand.png")
+sand_clearwater_top = py.image.load("assets/img/tiles/sand/sand_clearwater_top.png")
+sand_clearwater_top_right = py.image.load("assets/img/tiles/sand/sand_clearwater_top_right.png")
+sand_clearwater_top_left = py.image.load("assets/img/tiles/sand/sand_clearwater_top_left.png")
+sand_clearwater_left = py.image.load("assets/img/tiles/sand/sand_clearwater_left.png")
+sand_clearwater_right = py.image.load("assets/img/tiles/sand/sand_clearwater_right.png")
+sand_clearwater_down = py.image.load("assets/img/tiles/sand/sand_clearwater_down.png")
+sand_clearwater_down_left = py.image.load("assets/img/tiles/sand/sand_clearwater_down_left.png")
+sand_clearwater_down_right = py.image.load("assets/img/tiles/sand/sand_clearwater_down_right.png")
+sand_clearwater_corner_down_right = py.image.load("assets/img/tiles/sand/sand_clearwater_corner_down_right.png")
+sand_clearwater_corner_down_left = py.image.load("assets/img/tiles/sand/sand_clearwater_corner_down_left.png")
+sand_clearwater_corner_top_right = py.image.load("assets/img/tiles/sand/sand_clearwater_corner_top_right.png")
+sand_clearwater_corner_top_left = py.image.load("assets/img/tiles/sand/sand_clearwater_corner_top_left.png")
+sand_palm_top_right = py.image.load("assets/img/tiles/sand/sand_palm_top_right.png")
+sand_palm_top_left = py.image.load("assets/img/tiles/sand/sand_palm_top_left.png")
+sand_palm_down_right = py.image.load("assets/img/tiles/sand/sand_palm_down_right.png")
+sand_palm_down_left = py.image.load("assets/img/tiles/sand/sand_palm_down_left.png")
 
-
-rock = py.image.load(path_to("assets/img/tiles/cave/rock.png"))
-dirt_rock_top = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_top.png"))
-dirt_rock_top_right = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_top_right.png"))
-dirt_rock_top_left = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_top_left.png"))
-dirt_rock_left = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_left.png"))
-dirt_rock_right = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_right.png"))
-dirt_rock_down = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_down.png"))
-dirt_rock_down_left = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_down_left.png"))
-dirt_rock_down_right = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_down_right.png"))
-dirt_rock_corner_down_right = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_corner_down_right.png"))
-dirt_rock_corner_down_left = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_corner_down_left.png"))
-dirt_rock_corner_top_right = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_corner_top_right.png"))
-dirt_rock_corner_top_left = py.image.load(path_to("assets/img/tiles/dirt/dirt_rock_corner_top_left.png"))
+clear_sand = py.image.load("assets/img/tiles/clear_sand/clear_sand.png")
 
 
-
-
-dirt = py.image.load(path_to("assets/img/tiles/dirt/dirt.png"))
+rock = py.image.load("assets/img/tiles/cave/rock.png")
+dirt_rock_top = py.image.load("assets/img/tiles/dirt/dirt_rock_top.png")
+dirt_rock_top_right = py.image.load("assets/img/tiles/dirt/dirt_rock_top_right.png")
+dirt_rock_top_left = py.image.load("assets/img/tiles/dirt/dirt_rock_top_left.png")
+dirt_rock_left = py.image.load("assets/img/tiles/dirt/dirt_rock_left.png")
+dirt_rock_right = py.image.load("assets/img/tiles/dirt/dirt_rock_right.png")
+dirt_rock_down = py.image.load("assets/img/tiles/dirt/dirt_rock_down.png")
+dirt_rock_down_left = py.image.load("assets/img/tiles/dirt/dirt_rock_down_left.png")
+dirt_rock_down_right = py.image.load("assets/img/tiles/dirt/dirt_rock_down_right.png")
+dirt_rock_corner_down_right = py.image.load("assets/img/tiles/dirt/dirt_rock_corner_down_right.png")
+dirt_rock_corner_down_left = py.image.load("assets/img/tiles/dirt/dirt_rock_corner_down_left.png")
+dirt_rock_corner_top_right = py.image.load("assets/img/tiles/dirt/dirt_rock_corner_top_right.png")
+dirt_rock_corner_top_left = py.image.load("assets/img/tiles/dirt/dirt_rock_corner_top_left.png")
 
 
 
 
-snow = py.image.load(path_to("assets/img/tiles/snow/snow.png"))
-
-
-atlas_top_right = py.image.load(path_to("assets/img/tiles/building/atlas/atlas_top_right.png"))
-atlas_top_left = py.image.load(path_to("assets/img/tiles/building/atlas/atlas_top_left.png"))
-atlas_down_right = py.image.load(path_to("assets/img/tiles/building/atlas/atlas_down_right.png"))
-atlas_down_left = py.image.load(path_to("assets/img/tiles/building/atlas/atlas_down_left.png"))
-
-
-
-tower_top_right = py.image.load(path_to("assets/img/tiles/building/tower/tower_top_right.png"))
-tower_right = py.image.load(path_to("assets/img/tiles/building/tower/tower_right.png"))
-tower_down_right = py.image.load(path_to("assets/img/tiles/building/tower/tower_down_right.png"))
-tower_down = py.image.load(path_to("assets/img/tiles/building/tower/tower_down.png"))
-tower_down_left = py.image.load(path_to("assets/img/tiles/building/tower/tower_down_left.png"))
-tower_left = py.image.load(path_to("assets/img/tiles/building/tower/tower_left.png"))
-tower_top_left = py.image.load(path_to("assets/img/tiles/building/tower/tower_top_left.png"))
-tower_top = py.image.load(path_to("assets/img/tiles/building/tower/tower_top.png"))
-tower_center = py.image.load(path_to("assets/img/tiles/building/tower/tower_center.png"))
+dirt = py.image.load("assets/img/tiles/dirt/dirt.png")
 
 
 
 
+snow = py.image.load("assets/img/tiles/snow/snow.png")
 
 
-void = py.image.load(path_to("assets/img/tiles/void/void.png"))
+atlas_top_right = py.image.load("assets/img/tiles/building/atlas/atlas_top_right.png")
+atlas_top_left = py.image.load("assets/img/tiles/building/atlas/atlas_top_left.png")
+atlas_down_right = py.image.load("assets/img/tiles/building/atlas/atlas_down_right.png")
+atlas_down_left = py.image.load("assets/img/tiles/building/atlas/atlas_down_left.png")
+
+
+
+tower_top_right = py.image.load("assets/img/tiles/building/tower/tower_top_right.png")
+tower_right = py.image.load("assets/img/tiles/building/tower/tower_right.png")
+tower_down_right = py.image.load("assets/img/tiles/building/tower/tower_down_right.png")
+tower_down = py.image.load("assets/img/tiles/building/tower/tower_down.png")
+tower_down_left = py.image.load("assets/img/tiles/building/tower/tower_down_left.png")
+tower_left = py.image.load("assets/img/tiles/building/tower/tower_left.png")
+tower_top_left = py.image.load("assets/img/tiles/building/tower/tower_top_left.png")
+tower_top = py.image.load("assets/img/tiles/building/tower/tower_top.png")
+tower_center = py.image.load("assets/img/tiles/building/tower/tower_center.png")
+
+
+
+
+
+
+void = py.image.load("assets/img/tiles/void/void.png")
 
 
 
@@ -225,12 +224,6 @@ def draw_map_txt(tableau,player):
             if event.type == py.QUIT:
                 py.quit()
                 sys.exit()
-            elif (event.type == py.VIDEORESIZE):
-                width, height = py.display.get_surface().get_size()
-                tile_size[0] = int(width / columns) + 1
-                tile_size[1] = int(height / rows) + 1
-                player.resize(tile_size)
-                resize_tile()
 
             elif (event.type == py.MOUSEWHEEL):
                 player.update_selected_item(event.y)

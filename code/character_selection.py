@@ -6,11 +6,11 @@ from settings import *
 SCREEN = py.display.set_mode((800, 600))
 CLOCK = py.time.Clock()
 
-grass = py.image.load(path_to("assets/img/tiles/grass/grass.png"))
-dirt = py.image.load(path_to("assets/img/tiles/dirt/dirt.png"))
+grass = py.image.load("assets/img/tiles/grass/grass.png")
+dirt = py.image.load("assets/img/tiles/dirt/dirt.png")
 
-grass_dirt_left = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_left.png"))
-grass_dirt_right = py.image.load(path_to("assets/img/tiles/grass/grass_dirt_right.png"))
+grass_dirt_left = py.image.load("assets/img/tiles/grass/grass_dirt_left.png")
+grass_dirt_right = py.image.load("assets/img/tiles/grass/grass_dirt_right.png")
 
 def draw_background(background_frame,ended):
     width, height = py.display.get_surface().get_size()
@@ -41,15 +41,15 @@ def draw_background(background_frame,ended):
 
 
 def select_player_sprite():
-    sign_left = py.image.load(path_to("assets/img/GUI/sign_left.png"))
-    sign_right = py.image.load(path_to("assets/img/GUI/sign_right.png"))
-    start_button = py.image.load(path_to("assets/img/GUI/start_button.png"))
+    sign_left = py.image.load("assets/img/GUI/sign_left.png")
+    sign_right = py.image.load("assets/img/GUI/sign_right.png")
+    start_button = py.image.load("assets/img/GUI/start_button.png")
 
     py.display.set_caption("Character selection")
 
 
-    file_source = path_to("assets/img/characters")
-    all_sprite = os.listdir(path_to("assets/img/characters"))
+    file_source = "assets/img/characters"
+    all_sprite = os.listdir("assets/img/characters")
     animation = 1
     animation_frame = 0
     choice = 0

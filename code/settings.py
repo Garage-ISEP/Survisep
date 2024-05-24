@@ -24,21 +24,20 @@ def path_to(path:str) -> str:
 
 class Json:
     def __init__(self, file:str="settings") -> None:
-        self.path = os.path.join(os.path.dirname(__file__),"..")
         self.file = file
         self.init_data()
     
     def init_data(self) -> None:
         try:
-            with open(f'{self.path}{self.file}.json', 'r') as file:
+            with open(path_to(f'assets/data/{self.file}.json'), 'r') as file:
                 #0/0                        # <--- Cause an error; force except
                 pass
         except: # Default data for settings file
-            with open(f"{self.path}{self.file}.json", "w") as file:
+            with open(path_to(f'assets/data/{self.file}.json'), "w") as file:
                 json.dump(default_settings, file)
 
-    def getData(self) -> dict[list[str], list[int], list[int], list[bool], dict[list]]:
-        jsonFile = open(f"{self.path}{self.file}.json", "r") # Open the JSON file for reading
+    def getData(self) -> dict[list[int], list[int], dict, str, str, int]:
+        jsonFile = open(path_to(f'assets/data/{self.file}.json'), "r") # Open the JSON file for reading
         data = json.load(jsonFile) # Read the JSON into the buffer
         jsonFile.close() # Close the JSON file
         return data
@@ -49,6 +48,6 @@ class Json:
         data[key] = value
         
         ## Save our changes to JSON file
-        jsonFile = open(f"{self.path}{self.file}.json", "w+")
+        jsonFile = open(path_to(f'assets/data/{self.file}.json'), "w+")
         jsonFile.write(json.dumps(data))
         jsonFile.close()
