@@ -1,5 +1,5 @@
 {
-  "sprite": "female58",
+  "sprite": "yellowboy",
   "name": "Avabo",
   "level": 999,
   "hp_max": 100,
@@ -7,19 +7,19 @@
   "inventory": {
     "1": {
       "type": "sword",
-      "name": "demonic sword"
+      "name": "piercing sword"
     },
     "2": {
       "type": "sword",
-      "name": "reinforced copper sword"
+      "name": "heavy diamond sword"
     },
     "3": {
-      "type": "sword",
-      "name": "reinforced sword"
-    },
-    "4": {
       "type": "hammer",
       "name": "electric mace"
+    },
+    "4": {
+      "type": "sword",
+      "name": "reinforced sword"
     }
   }
 }

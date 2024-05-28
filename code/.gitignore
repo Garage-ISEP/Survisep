@@ -1,2 +1,5 @@
 # Ignore pycache when commit
 __pycache__/
+
+# Ignore data, so it's not commit every time
+../assets/data/*
