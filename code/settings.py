@@ -5,7 +5,7 @@ py.font.init()
 py.display.init()
 
 default_settings = {
-                "resolution_default": (640, 480),
+                "resolution_default": (800, 600),
                 "resolution": (640, 480),
                 "pc_res": {
                     "16:9": [(320,180),(480,270),(640,360),(800,450),(960,540),(1120,630)],
@@ -14,12 +14,13 @@ default_settings = {
                 },
                 "aspect_ratio_default": '4:3',
                 "aspect_ratio": '4:3',
+                "game_clock": 30,
                 "fps": 30
         }
 
 def path_to(path:str) -> str:
-    path = path.split('/')
-    path = f"{os.sep}".join(path)
+    #path = path.split('/')
+    #path = f"{os.sep}".join(path)
     return path
 
 class Json:
@@ -29,15 +30,15 @@ class Json:
     
     def init_data(self) -> None:
         try:
-            with open(path_to(f'assets/data/{self.file}.json'), 'r') as file:
+            with open(f'assets/data/{self.file}.json', 'r') as file:
                 #0/0                        # <--- Cause an error; force except
                 pass
         except: # Default data for settings file
-            with open(path_to(f'assets/data/{self.file}.json'), "w") as file:
+            with open(f'assets/data/{self.file}.json', "w") as file:
                 json.dump(default_settings, file)
 
     def getData(self) -> dict[list[int], list[int], dict, str, str, int]:
-        jsonFile = open(path_to(f'assets/data/{self.file}.json'), "r") # Open the JSON file for reading
+        jsonFile = open(f'assets/data/{self.file}.json', "r") # Open the JSON file for reading
         data = json.load(jsonFile) # Read the JSON into the buffer
         jsonFile.close() # Close the JSON file
         return data
@@ -48,6 +49,17 @@ class Json:
         data[key] = value
         
         ## Save our changes to JSON file
-        jsonFile = open(path_to(f'assets/data/{self.file}.json'), "w+")
+        jsonFile = open(f'assets/data/{self.file}.json', "w+")
         jsonFile.write(json.dumps(data))
         jsonFile.close()
+
+SETTINGS = Json()
+SETTINGS.init_data() # Check is file exists
+
+DATA            = SETTINGS.getData()
+FONT            = py.font.Font(None, 24)
+CLOCK           = py.time.Clock()
+FPS:int         = DATA['fps']
+GAME_CLOCK:int  = DATA['game_clock']
+
+SCREEN = py.display.set_mode(DATA['resolution'], py.HWSURFACE| py.DOUBLEBUF)

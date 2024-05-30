@@ -1,8 +1,6 @@
 from settings import *
 import random as r
 
-fps = 30
-
 ###########################################################
 #
 #                      Player Sprite Funcs
@@ -185,7 +183,7 @@ class Player_class:
 
     # Draw Inventory TOP LEFT of Screen
 
-    def draw_inventory(self,screen,width, height,tile_size):
+    def draw_inventory(self,screen:py.surface.Surface,width, height,tile_size):
         font_name = py.font.SysFont('Eight Bit Dragon', 200)
         for x in range(self.inventory_size):
             #normal tile
@@ -258,7 +256,7 @@ class Player_class:
     def update_animation_frame(self,moving):
         if (moving):
             self.frame+=1
-            animation_time = int(fps*0.25)
+            animation_time = int(FPS*0.25)
             if (self.frame==animation_time*4):
                 self.frame=0
             if(self.frame<animation_time*1):

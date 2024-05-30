@@ -4,12 +4,6 @@ from PIL import Image
 from player_file import Player_class
 from settings import *
 
-clock=py.time.Clock()
-
-SCREEN = py.display.set_mode((800, 600), py.HWSURFACE| py.DOUBLEBUF)
-
-fps = 30
-
 tile_size = [0,0]
 rows = 18
 columns = int(rows*1.3)
@@ -57,7 +51,6 @@ grass_mushroom1 = py.image.load("assets/img/tiles/grass/grass_mushroom1.png")
 grass_mushroom2 = py.image.load("assets/img/tiles/grass/grass_mushroom2.png")
 grass_bush = py.image.load("assets/img/tiles/grass/grass_bush.png")
 grass_rock = py.image.load("assets/img/tiles/grass/grass_rock.png")
-
 
 
 
@@ -186,7 +179,7 @@ resize_tile()
 
 tile_dict = {}
 # Opening JSON file
-with open('assets/data/tile.json') as json_file:
+with open("assets/data/tile.json") as json_file:
     tile_dict = json.load(json_file)
 
 
@@ -212,7 +205,7 @@ def draw_map_txt(tableau,player):
         tile_size[0] = int(width/columns)+1
         tile_size[1] = int(height / rows)+1
 
-        clock.tick(fps)
+        CLOCK.tick(FPS)
         draw_txt(width,height,tableau,player)
         player.draw(SCREEN,tile_size)
 
@@ -298,7 +291,7 @@ def player_apparition(tableau,player):
     player.offset[1]=-(height/2)
     player.resize(tile_size)
     for i in range(lenght):
-        clock.tick(60)
+        CLOCK.tick(FPS*2)
 
         width, height = py.display.get_surface().get_size()
         tile_size[0] = int(width / columns) + 1

@@ -1,5 +1,5 @@
 {
-  "sprite": "yellowboy",
+  "sprite": "soldier01",
   "name": "Avabo",
   "level": 999,
   "hp_max": 100,
@@ -7,19 +7,19 @@
   "inventory": {
     "1": {
       "type": "sword",
-      "name": "piercing sword"
+      "name": "reinforced topaz sword"
     },
     "2": {
       "type": "sword",
-      "name": "heavy diamond sword"
+      "name": "large sword"
     },
     "3": {
-      "type": "hammer",
-      "name": "electric mace"
+      "type": "sword",
+      "name": "sworded sword"
     },
     "4": {
       "type": "sword",
-      "name": "reinforced sword"
+      "name": "ice piercing sword"
     }
   }
 }

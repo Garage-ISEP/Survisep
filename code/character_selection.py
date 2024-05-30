@@ -2,10 +2,6 @@ import os, sys, json
 import random as r
 from settings import *
 
-
-SCREEN = py.display.set_mode((800, 600))
-CLOCK = py.time.Clock()
-
 grass = py.image.load("assets/img/tiles/grass/grass.png")
 dirt = py.image.load("assets/img/tiles/dirt/dirt.png")
 
@@ -65,7 +61,7 @@ def select_player_sprite():
         background_frame = draw_background(background_frame,False)
 
         width, height = py.display.get_surface().get_size()
-        CLOCK.tick(60)
+        CLOCK.tick(FPS*2)
 
         for event in py.event.get():
             if event.type == py.QUIT:
