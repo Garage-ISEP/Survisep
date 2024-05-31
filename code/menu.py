@@ -73,11 +73,11 @@ class Element:
         return (text, (x, y))
 
 class Button(Element):
-    def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=['burger', 'show'], hide_tags=[False, False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
+    def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=['burger', 'text', 'rect', 'surface'], hide_tags=[False, False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
         super().__init__(topleft_coords, size, id, surface, tags, hide_tags, pre_switched, colors)
 
 class HamburgerMenu(Element):
-    def __init__(self, topleft_coords: tuple[int, int], size: tuple[int, int], id: str, surface: py.surface.Surface = None, tags: list[str] = ['burger', 'show', 'close'], hide_tags=[False, False, False], pre_switched=False, colors: list[tuple[int, int, int]] = [(0, 0, 0)], menu_items: list[str] = []) -> None:
+    def __init__(self, topleft_coords: tuple[int, int], size: tuple[int, int], id: str, surface: py.surface.Surface = None, tags: list[str] = ['burger', 'close', 'text', 'no-rect', 'surface'], hide_tags=[False, False, False], pre_switched=False, colors: list[tuple[int, int, int]] = [(0, 0, 0)], menu_items: list[str] = []) -> None:
         super().__init__(topleft_coords, size, id, surface, tags, hide_tags, pre_switched, colors)
         self.menu_items = menu_items
         self.menu_buttons = self.create_menu_buttons()
@@ -153,15 +153,14 @@ class Menu:
         self.window             = py.display.set_mode((self.width, self.height), py.HWSURFACE | py.SRCALPHA)
 
         self.ELEMENTS:list[Element] = []
-        menuImages = ImageLoader().dir
-        print(menuImages)
+        self.menuImages = ImageLoader().dir
 
         #self.ELEMENTS.append(HamburgerMenu((200, 200), (50, 50), "menu", colors=[(200, 200, 200)], menu_items=["Item 1", "Item 2", "Item 3"], tags=['burger', 'show', 'close']))
         
-        self.ELEMENTS.append(Button((self.width/8, self.width/16), (self.width/8, self.width/16), "res-", colors=[(255,100,100)], surface=menuImages['bs']))
-        self.ELEMENTS.append(Button((self.width - (self.width/8 + self.width/8), self.width/16), (self.width/8, self.width/16), "res+", colors=[(100,255,100)], tags=['button', 'show'], surface=menuImages['bs']))
-        self.ELEMENTS.append(Button((self.width//2 - self.width/6, self.height - self.width/5), (self.width/3, self.width/10), "apply", colors=[(100,100,255)]))
-        self.ELEMENTS.append(Button((self.width - self.width/16, 0), (self.width/16, self.width/16), "X", colors=[(0,0,0)], hide_tags=[True, False, True], surface=menuImages['home']))
+        self.ELEMENTS.append(Button((self.width/8, self.width/16), (self.width/8, self.width/16), "res-", colors=[(255,100,100)], tags=['button', '', '', ''], surface=self.menuImages['bs']))
+        self.ELEMENTS.append(Button((self.width - (self.width/8 + self.width/8), self.width/16), (self.width/8, self.width/16), "res+", colors=[(100,255,100)], tags=['button', '', '', ''], surface=self.menuImages['bs']))
+        self.ELEMENTS.append(Button((self.width//2 - self.width/6, self.height - self.width/5), (self.width/3, self.width/10), "apply", colors=[(100,100,255)], tags=['button', '', '', ''], surface=self.menuImages['bs']))
+        self.ELEMENTS.append(Button((self.width - self.width/16, 0), (self.width/16, self.width/16), "home", colors=[(0,0,0)], tags=['button', 'no-rect', 'no-text', ''], hide_tags=[True, False, True], surface=self.menuImages['home']))
         
         self.resize_elements()  # Normalize positions and sizes of elements
 
@@ -175,6 +174,7 @@ class Menu:
 
     def resize_elements(self):
         # Adjust the size and position of elements based on the new window size
+        # + SCALE element's SURFACE
         for x in self.ELEMENTS:
             x.rect = py.rect.Rect(
                 x.x * (self.width / self.original_res[0]), 
@@ -182,7 +182,6 @@ class Menu:
                 x.width * (self.width / self.original_res[0]), 
                 x.height * (self.height / self.original_res[1])
             )
-            # SCALE element's SURFACE
 
     def render(self):
         py.display.set_caption(f"Resolution: {self.data['resolution']} | Ratio: {self.data['aspect_ratio']} | Index: {self.index}")
@@ -193,6 +192,7 @@ class Menu:
 
         for x in self.ELEMENTS:
             x.draw(self.window, self.font, scale_factor)
+            self.animation(x)
 
     def events(self):
         for event in py.event.get():
@@ -220,12 +220,22 @@ class Menu:
                             self.window = py.display.set_mode((self.width, self.height), py.SRCALPHA)
                             self.resize_elements()
                         
-                        if button.id == 'X':
+                        if button.id == 'home':
                             self.isActive = False
             
             if event.type == py.KEYUP:
                 if event.key == py.K_ESCAPE:
                     self.running = False
+    
+    def animation(self, element:Element):
+        click = py.mouse.get_pressed()[0]
+        mouse_pos = py.mouse.get_pos()
+        
+        if not element.switch:
+            if 'button' in element.tags and element.id != 'home':
+                if click and element.is_hovered(mouse_pos):
+                    element.surface = self.menuImages['bs_pressed']
+                else: element.surface = self.menuImages['bs']
 
     def main(self):
         #self.running = True
