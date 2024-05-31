@@ -135,6 +135,7 @@ class HamburgerMenu(Element):
 
 class Menu:
     def __init__(self) -> None:
+        self.isActive = True
 
         self.settings           = Json()
         self.data               = self.settings.getData()
@@ -159,6 +160,7 @@ class Menu:
         self.ELEMENTS.append(Button((self.width/8, self.width/16), (self.width/8, self.width/16), "res-", colors=[(255,100,100)]))
         self.ELEMENTS.append(Button((self.width - (self.width/8 + self.width/8), self.width/16), (self.width/8, self.width/16), "res+", colors=[(100,255,100)], tags=['button', 'show']))
         self.ELEMENTS.append(Button((self.width//2 - self.width/6, self.height - self.width/5), (self.width/3, self.width/10), "apply", colors=[(100,100,255)]))
+        self.ELEMENTS.append(Button((self.width - self.width/16, 0), (self.width/16, self.width/16), "Go back", colors=[(200,200,200)]))
         
         self.resize_elements()  # Normalize positions and sizes of elements
 
@@ -170,6 +172,9 @@ class Menu:
 - Tick rate: {TICK}
 """)
         
+    def get_current_stat(self) -> bool:
+        return self.isActive
+
     def resize_elements(self):
         print(self.original_res)
         # Adjust the size and position of elements based on the new window size
@@ -220,15 +225,18 @@ class Menu:
 
                             self.window = py.display.set_mode((self.width, self.height), py.SRCALPHA)
                             self.resize_elements()
+                        
+                        if button.id == 'Go back':
+                            self.isActive = False
             
             if event.type == py.KEYUP:
                 if event.key == py.K_ESCAPE:
                     self.running = False
 
     def main(self):
-        self.running = True
+        #self.running = True
 
-        while self.running:
+        while self.isActive:
 
             CLOCK.tick(FPS)
 

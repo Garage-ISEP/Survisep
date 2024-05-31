@@ -6,20 +6,20 @@
   "hp": 100,
   "inventory": {
     "1": {
-      "type": "hammer",
-      "name": "iron hammer"
+      "type": "sword",
+      "name": "night sword"
     },
     "2": {
       "type": "sword",
-      "name": "gold sword"
+      "name": "omega ice sword"
     },
     "3": {
       "type": "sword",
-      "name": "lava foil"
+      "name": "green spirit sword"
     },
     "4": {
-      "type": "sword",
-      "name": "ice piercing sword"
+      "type": "knife",
+      "name": "golden knife"
     }
   }
 }

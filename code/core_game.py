@@ -198,7 +198,7 @@ def draw_map_txt(tableau,player):
         if(time.time()-time_start>1):
             print(frame)
             if DEBUG:
-                print(f"clock fps: {CLOCK.get_fps()} | clock time: {CLOCK.get_time()}")
+                print(f"clock fps: {round(CLOCK.get_fps())} | clock time: {CLOCK.get_time()}")
             time_start=time.time()
             frame=0
 
@@ -240,7 +240,16 @@ def draw_map_txt(tableau,player):
             tableau = player.interract(tableau)
         
         if key[py.K_ESCAPE]:
-            menu.run()
+            
+            menuScreen = menu.Menu()
+            
+            while menuScreen.isActive:
+                menuScreen.main()
+            width, height = py.display.get_surface().get_size()
+            tile_size[0] = int(width / columns) + 1
+            tile_size[1] = int(height / rows) + 1
+            player.resize(tile_size)
+            resize_tile()
 
 
 def check_tile_id(value):

@@ -1,5 +1,8 @@
 # Ignore pycache when commit
 __pycache__/
 
+# For MacOS
+*/.DS_Store
+
 # Ignore data, so it's not commit every time
 ../assets/data/*
