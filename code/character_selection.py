@@ -49,7 +49,7 @@ def select_player_sprite():
     animation = 1
     animation_frame = 0
     choice = 0
-    animation_time = 15
+    animation_time = TICK/8
     background_frame = 0
 
 
@@ -61,7 +61,7 @@ def select_player_sprite():
         background_frame = draw_background(background_frame,False)
 
         width, height = py.display.get_surface().get_size()
-        CLOCK.tick(FPS*2)
+        CLOCK.tick(FPS)
 
         for event in py.event.get():
             if event.type == py.QUIT:
@@ -177,7 +177,7 @@ def finished_animation(background_frame,choice):
 
 
     for i in range(1,lenght):
-        CLOCK.tick(60)
+        CLOCK.tick(FPS)
         draw_background(background_frame,True)
         # draw player
         player_sprite = py.image.load(file_source + "/" + all_sprite[choice] + "/"+ side[animation_side]  +"_"   + "1.png")

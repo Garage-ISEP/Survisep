@@ -256,7 +256,7 @@ class Player_class:
     def update_animation_frame(self,moving):
         if (moving):
             self.frame+=1
-            animation_time = int(FPS*0.25)
+            animation_time = int(TICK/8)
             if (self.frame==animation_time*4):
                 self.frame=0
             if(self.frame<animation_time*1):

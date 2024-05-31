@@ -4,6 +4,8 @@ from PIL import Image
 from player_file import Player_class
 from settings import *
 
+import menu
+
 tile_size = [0,0]
 rows = 18
 columns = int(rows*1.3)
@@ -51,7 +53,6 @@ grass_mushroom1 = py.image.load("assets/img/tiles/grass/grass_mushroom1.png")
 grass_mushroom2 = py.image.load("assets/img/tiles/grass/grass_mushroom2.png")
 grass_bush = py.image.load("assets/img/tiles/grass/grass_bush.png")
 grass_rock = py.image.load("assets/img/tiles/grass/grass_rock.png")
-
 
 
 
@@ -196,6 +197,8 @@ def draw_map_txt(tableau,player):
 
         if(time.time()-time_start>1):
             print(frame)
+            if DEBUG:
+                print(f"clock fps: {CLOCK.get_fps()} | clock time: {CLOCK.get_time()}")
             time_start=time.time()
             frame=0
 
@@ -235,6 +238,9 @@ def draw_map_txt(tableau,player):
 
         if (py.mouse.get_pressed()[0] == 1):
             tableau = player.interract(tableau)
+        
+        if key[py.K_ESCAPE]:
+            menu.run()
 
 
 def check_tile_id(value):
@@ -291,7 +297,7 @@ def player_apparition(tableau,player):
     player.offset[1]=-(height/2)
     player.resize(tile_size)
     for i in range(lenght):
-        CLOCK.tick(FPS*2)
+        CLOCK.tick(FPS)
 
         width, height = py.display.get_surface().get_size()
         tile_size[0] = int(width / columns) + 1

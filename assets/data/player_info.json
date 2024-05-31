@@ -1,21 +1,21 @@
 {
-  "sprite": "soldier01",
+  "sprite": "female01",
   "name": "Avabo",
   "level": 999,
   "hp_max": 100,
   "hp": 100,
   "inventory": {
     "1": {
-      "type": "sword",
-      "name": "reinforced topaz sword"
+      "type": "hammer",
+      "name": "iron hammer"
     },
     "2": {
       "type": "sword",
-      "name": "large sword"
+      "name": "gold sword"
     },
     "3": {
       "type": "sword",
-      "name": "sworded sword"
+      "name": "lava foil"
     },
     "4": {
       "type": "sword",

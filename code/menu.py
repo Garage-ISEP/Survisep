@@ -42,6 +42,13 @@ class Element:
     
     def is_hovered(self, mouse_coords:tuple[int, int]) -> bool:
         return self.rect.collidepoint(mouse_coords)
+    
+    def draw(self, window: py.surface.Surface, font: py.font.Font, scale_factor: tuple[float, float] = (1.0, 1.0)) -> None:
+        if not self.surface_hide:
+            py.draw.rect(window, self.color, self.rect)
+        if not self.text_hide:
+            text = self.print_text(font, msg=self.id, xy_offset=(0, 0), scale_factor=scale_factor)
+            window.blit(text[0], text[1])
 
     def print_text(self, font: py.font.Font, xy_offset: tuple[int,int]=(0,0), msg="", color=(0,0,0), align='center', scale_factor: tuple[float, float]=(1.0, 1.0)) -> tuple[py.surface.Surface, (int, int)]:
     #   Scale Font for resized windows
@@ -71,12 +78,6 @@ class Element:
 class Button(Element):
     def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=['burger', 'show'], hide_tags=[False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
         super().__init__(topleft_coords, size, id, surface, tags, hide_tags, pre_switched, colors)
-    
-    def is_hovered(self, mouse_coords:tuple[int, int]) -> bool:
-        return super().is_hovered(mouse_coords)
-    
-    def print_text(self, font:py.font.Font, xy_offset:tuple[int,int]=(0,0), msg="", color=(0,0,0), align='center', scale_factor: tuple[float, float]=(1.0, 1.0)):
-        return super().print_text(font, xy_offset, msg, color, align, scale_factor)
 
 class HamburgerMenu(Element):
     def __init__(self, topleft_coords: tuple[int, int], size: tuple[int, int], id: str, surface: py.surface.Surface = None, tags: list[str] = ['burger', 'show', 'close'], hide_tags=[False, False], pre_switched=False, colors: list[tuple[int, int, int]] = [(0, 0, 0)], menu_items: list[str] = []) -> None:
@@ -106,12 +107,8 @@ class HamburgerMenu(Element):
                     return True
         return False
 
-    def render(self, window: py.surface.Surface, font: py.font.Font, scale_factor: tuple[float, float] = (1.0, 1.0)):
-        if not self.surface_hide:
-            py.draw.rect(window, self.color, self.rect)
-        if not self.text_hide:
-            text = self.print_text(font, msg=self.id, xy_offset=(0, 0), scale_factor=scale_factor)
-            window.blit(text[0], text[1])
+    def draw(self, window: py.surface.Surface, font: py.font.Font, scale_factor: tuple[float, float] = (1.0, 1.0)) -> None:
+        super().draw(window, font, scale_factor)
         
         if self.menu_open:
             for button in self.menu_buttons:
@@ -142,12 +139,9 @@ class Menu:
         self.settings           = Json()
         self.data               = self.settings.getData()
         self.font               = py.font.Font(None, 24)
-        self.CLOCK              = py.time.Clock()
 
         self.width, self.height = self.data["resolution"]
         self.original_res = self.data["resolution"] # Use of 'original' res as a reference for resizes
-
-        self.fps                = self.data["fps"]
 
         self.index              = self.data['pc_res'][self.data['aspect_ratio']].index(self.data['resolution']) #Index -> switch between resolutions
 
@@ -172,7 +166,8 @@ class Menu:
             print(f"""
     | Window
 - Actual Size: {self.width},{self.height}
-- FPS: {self.fps}
+- FPS: {FPS}
+- Tick rate: {TICK}
 """)
         
     def resize_elements(self):
@@ -198,15 +193,7 @@ class Menu:
         scale_factor = (self.width / self.original_res[0], self.height / self.original_res[1])
 
         for x in self.ELEMENTS:
-            if not x.surface_hide:
-                if x.surface != None:
-                    x.rect = py.rect.Rect(x.rect.topleft, x.surface.get_rect().size)
-                    py.draw.rect(self.window, x.color, x.rect)
-                    self.window.blit(x.surface, x.rect)
-                else: py.draw.rect(self.window, x.color, x.rect)
-            if not x.text_hide:
-                text = x.print_text(self.font, msg=x.id, xy_offset=(0,0), scale_factor=scale_factor)
-                self.window.blit(text[0], text[1])
+            x.draw(self.window, self.font, scale_factor)
 
     def events(self):
         for event in py.event.get():
@@ -233,21 +220,26 @@ class Menu:
 
                             self.window = py.display.set_mode((self.width, self.height), py.SRCALPHA)
                             self.resize_elements()
+            
+            if event.type == py.KEYUP:
+                if event.key == py.K_ESCAPE:
+                    self.running = False
 
     def main(self):
         self.running = True
 
         while self.running:
 
-            self.CLOCK.tick(self.fps)
+            CLOCK.tick(FPS)
 
             self.render()
             self.events()
 
             py.display.update()
 
-if __name__ == '__main__':
-    DEBUG = True
-
+def run():
     menu = Menu()
     menu.main()
+
+if __name__ == '__main__':
+    run()

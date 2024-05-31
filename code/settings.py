@@ -14,7 +14,7 @@ default_settings = {
                 },
                 "aspect_ratio_default": '4:3',
                 "aspect_ratio": '4:3',
-                "game_clock": 30,
+                "tickrate": 60,
                 "fps": 30
         }
 
@@ -60,6 +60,8 @@ DATA            = SETTINGS.getData()
 FONT            = py.font.Font(None, 24)
 CLOCK           = py.time.Clock()
 FPS:int         = DATA['fps']
-GAME_CLOCK:int  = DATA['game_clock']
+TICK:int  = DATA['tickrate']
 
 SCREEN = py.display.set_mode(DATA['resolution'], py.HWSURFACE| py.DOUBLEBUF)
+
+DEBUG = True
