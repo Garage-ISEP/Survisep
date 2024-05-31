@@ -1,19 +1,5 @@
+from typing import Any
 from settings import *
-
-###########################################################
-#
-#                           To do list
-#
-#   Element's class rework
-#
-#
-#
-#
-#
-#
-###########################################################
-
-
 
 ###########################################################
 #
@@ -21,32 +7,43 @@ from settings import *
 #
 ###########################################################
 
+class ImageLoader:
+    def __init__(self, id:str="menu", path:str="assets/img/GUI/settings") -> None:
+        self.dir = {'id':id,
+                    'path':path}
+        
+        for file in os.listdir(path):
+            if file.endswith('.png'):
+                self.dir[file.removesuffix('.png')] = py.image.load(f"{path}/{file}").convert_alpha()
+
 class Element:
-    def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=[], hide_tags=[False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
-        self.x, self.y                      = topleft_coords 
-        self.width, self.height             = size
+    def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=[], hide_tags=[False, False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
+        self.id                 = id
+        self.switch             = pre_switched
 
-        self.switch                         = pre_switched
+        self.x, self.y          = topleft_coords 
+        self.width, self.height = size
 
-        self.surface_hide, self.text_hide   = hide_tags
+        self.hide_tags          = hide_tags
+        self.tags               = tags
 
-        self.color                          = colors[0]
-        self.colors                         = colors
 
-        self.id                             = id
-        self.tags                           = tags
-
-        self.surface                        = surface
-
+        self.color              = colors[0]
+        self.colors             = colors
+        
+        self.surface            = surface
         self.rect = py.rect.Rect(self.x, self.y, self.width, self.height)
     
     def is_hovered(self, mouse_coords:tuple[int, int]) -> bool:
         return self.rect.collidepoint(mouse_coords)
     
     def draw(self, window: py.surface.Surface, font: py.font.Font, scale_factor: tuple[float, float] = (1.0, 1.0)) -> None:
-        if not self.surface_hide:
+        if not self.hide_tags[0]:
             py.draw.rect(window, self.color, self.rect)
-        if not self.text_hide:
+        if not self.hide_tags[1] and self.surface != None:
+            self.surface = py.transform.scale(self.surface, self.rect.size)
+            window.blit(self.surface, self.rect.topleft)
+        if not self.hide_tags[2]:
             text = self.print_text(font, msg=self.id, xy_offset=(0, 0), scale_factor=scale_factor)
             window.blit(text[0], text[1])
 
@@ -76,11 +73,11 @@ class Element:
         return (text, (x, y))
 
 class Button(Element):
-    def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=['burger', 'show'], hide_tags=[False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
+    def __init__(self, topleft_coords:tuple[int, int], size:tuple[int,int], id:str, surface:py.surface.Surface=None, tags:list[str]=['burger', 'show'], hide_tags=[False, False, False], pre_switched=False, colors:list[tuple[int,int,int],tuple[int,int,int]]=[(0,0,0)]) -> None:
         super().__init__(topleft_coords, size, id, surface, tags, hide_tags, pre_switched, colors)
 
 class HamburgerMenu(Element):
-    def __init__(self, topleft_coords: tuple[int, int], size: tuple[int, int], id: str, surface: py.surface.Surface = None, tags: list[str] = ['burger', 'show', 'close'], hide_tags=[False, False], pre_switched=False, colors: list[tuple[int, int, int]] = [(0, 0, 0)], menu_items: list[str] = []) -> None:
+    def __init__(self, topleft_coords: tuple[int, int], size: tuple[int, int], id: str, surface: py.surface.Surface = None, tags: list[str] = ['burger', 'show', 'close'], hide_tags=[False, False, False], pre_switched=False, colors: list[tuple[int, int, int]] = [(0, 0, 0)], menu_items: list[str] = []) -> None:
         super().__init__(topleft_coords, size, id, surface, tags, hide_tags, pre_switched, colors)
         self.menu_items = menu_items
         self.menu_buttons = self.create_menu_buttons()
@@ -112,9 +109,11 @@ class HamburgerMenu(Element):
         
         if self.menu_open:
             for button in self.menu_buttons:
-                if not button.surface_hide:
+                if not button.hide_tags[0]:
                     py.draw.rect(window, button.color, button.rect)
-                if not button.text_hide:
+                if not self.hide_tags[1] and self.surface != None:
+                    pass
+                if not button.hide_tags[2]:
                     text = button.print_text(font, msg=button.id, xy_offset=(0, 0), scale_factor=scale_factor)
                     window.blit(text[0], text[1])
 
@@ -154,13 +153,15 @@ class Menu:
         self.window             = py.display.set_mode((self.width, self.height), py.HWSURFACE | py.SRCALPHA)
 
         self.ELEMENTS:list[Element] = []
+        menuImages = ImageLoader().dir
+        print(menuImages)
 
         #self.ELEMENTS.append(HamburgerMenu((200, 200), (50, 50), "menu", colors=[(200, 200, 200)], menu_items=["Item 1", "Item 2", "Item 3"], tags=['burger', 'show', 'close']))
         
-        self.ELEMENTS.append(Button((self.width/8, self.width/16), (self.width/8, self.width/16), "res-", colors=[(255,100,100)]))
-        self.ELEMENTS.append(Button((self.width - (self.width/8 + self.width/8), self.width/16), (self.width/8, self.width/16), "res+", colors=[(100,255,100)], tags=['button', 'show']))
+        self.ELEMENTS.append(Button((self.width/8, self.width/16), (self.width/8, self.width/16), "res-", colors=[(255,100,100)], surface=menuImages['bs']))
+        self.ELEMENTS.append(Button((self.width - (self.width/8 + self.width/8), self.width/16), (self.width/8, self.width/16), "res+", colors=[(100,255,100)], tags=['button', 'show'], surface=menuImages['bs']))
         self.ELEMENTS.append(Button((self.width//2 - self.width/6, self.height - self.width/5), (self.width/3, self.width/10), "apply", colors=[(100,100,255)]))
-        self.ELEMENTS.append(Button((self.width - self.width/16, 0), (self.width/16, self.width/16), "Go back", colors=[(200,200,200)]))
+        self.ELEMENTS.append(Button((self.width - self.width/16, 0), (self.width/16, self.width/16), "X", colors=[(0,0,0)], hide_tags=[True, False, True], surface=menuImages['home']))
         
         self.resize_elements()  # Normalize positions and sizes of elements
 
@@ -171,24 +172,17 @@ class Menu:
 - FPS: {FPS}
 - Tick rate: {TICK}
 """)
-        
-    def get_current_stat(self) -> bool:
-        return self.isActive
 
     def resize_elements(self):
-        print(self.original_res)
         # Adjust the size and position of elements based on the new window size
         for x in self.ELEMENTS:
-            print(x.id,x.rect)
             x.rect = py.rect.Rect(
                 x.x * (self.width / self.original_res[0]), 
                 x.y * (self.height / self.original_res[1]), 
                 x.width * (self.width / self.original_res[0]), 
                 x.height * (self.height / self.original_res[1])
             )
-            print(x.id,x.rect)
             # SCALE element's SURFACE
-        print("\n")
 
     def render(self):
         py.display.set_caption(f"Resolution: {self.data['resolution']} | Ratio: {self.data['aspect_ratio']} | Index: {self.index}")
@@ -226,7 +220,7 @@ class Menu:
                             self.window = py.display.set_mode((self.width, self.height), py.SRCALPHA)
                             self.resize_elements()
                         
-                        if button.id == 'Go back':
+                        if button.id == 'X':
                             self.isActive = False
             
             if event.type == py.KEYUP:

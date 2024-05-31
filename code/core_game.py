@@ -242,7 +242,7 @@ def draw_map_txt(tableau,player):
         if key[py.K_ESCAPE]:
             
             menuScreen = menu.Menu()
-            
+
             while menuScreen.isActive:
                 menuScreen.main()
             width, height = py.display.get_surface().get_size()

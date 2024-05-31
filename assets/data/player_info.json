@@ -1,5 +1,5 @@
 {
-  "sprite": "female01",
+  "sprite": "snow_man02",
   "name": "Avabo",
   "level": 999,
   "hp_max": 100,
@@ -7,19 +7,19 @@
   "inventory": {
     "1": {
       "type": "sword",
-      "name": "night sword"
+      "name": "large lightning sword"
     },
     "2": {
       "type": "sword",
-      "name": "omega ice sword"
+      "name": "reinforced amethyst sword"
     },
     "3": {
       "type": "sword",
-      "name": "green spirit sword"
+      "name": "silver sword"
     },
     "4": {
-      "type": "knife",
-      "name": "golden knife"
+      "type": "sword",
+      "name": "cave crystal sword"
     }
   }
 }
